@@ -30,7 +30,7 @@ X = data(:, [1, 2]); y = data(:, 3);
 %  We start the exercise by first plotting the data to understand the 
 %  the problem we are working with.
 
-fprintf(['Plotting data with + indicating (y = 1) examples and o ' ...
+fprintf(['1. Plotting data with + indicating (y = 1) examples and o ' ...
          'indicating (y = 0) examples.\n']);
 
 plotData(X, y);
@@ -55,6 +55,8 @@ pause;
 %  costFunction.m
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
+fprintf('2. Compute Cost\n');
+
 [m, n] = size(X);
 
 % Add intercept term to x and X_test
@@ -65,6 +67,8 @@ initial_theta = zeros(n + 1, 1);
 
 % Compute and display initial cost and gradient
 [cost, grad] = costFunction(initial_theta, X, y);
+
+% plot cost 
 
 fprintf('Cost at initial theta (zeros): %f\n', cost);
 fprintf('Expected cost (approx): 0.693\n');
@@ -91,6 +95,7 @@ pause;
 %  optimal parameters theta.
 
 %  Set options for fminunc
+fprintf('3. fminunc\n');
 options = optimset('GradObj', 'on', 'MaxIter', 400);
 
 %  Run fminunc to obtain the optimal theta
@@ -135,7 +140,7 @@ pause;
 
 %  Predict probability for a student with score 45 on exam 1 
 %  and score 85 on exam 2 
-
+fprintf('4. Predict\n');
 prob = sigmoid([1 45 85] * theta);
 fprintf(['For a student with scores 45 and 85, we predict an admission ' ...
          'probability of %f\n'], prob);
@@ -143,6 +148,7 @@ fprintf('Expected value: 0.775 +/- 0.002\n\n');
 
 % Compute accuracy on our training set
 p = predict(theta, X);
+q = sigmoid(X*theta)*100; %for percentage of possibility
 
 fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
 fprintf('Expected accuracy (approx): 89.0\n');
